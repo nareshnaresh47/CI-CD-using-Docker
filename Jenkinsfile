@@ -15,8 +15,14 @@ pipeline {
         }
 	 stage('Execute Maven') {
            steps {
-             
-                sh 'mvn package'             
+		sh '''
+		mvn package
+		pwd
+		ls -lart
+		touch "hello.txt"
+		
+		
+		'''
           }
         }
         
