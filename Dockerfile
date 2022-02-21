@@ -13,6 +13,6 @@ RUN java -version
 
 WORKDIR /opt/tomcat/webapps
  ADD /var/lib/jenkins/workspace/PipelineTesting/target/LoginWebApp-1.war /usr/local/tomcat/webapps/
-EXPOSE 8081
+EXPOSE 8082
 
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
