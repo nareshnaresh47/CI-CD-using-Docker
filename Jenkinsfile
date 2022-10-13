@@ -1,51 +1,30 @@
 pipeline {
-	agent any
-	
-	  tools
-    {
-       maven "Maven"
-    }
- stages {
-      stage('checkout') {
-           steps {
-             
-                git branch: 'master', url: 'https://github.com/devops4solutions/CI-CD-using-Docker.git'
-             
-          }
-        }
-	 stage('Execute Maven') {
-           steps {
-		sh '''
-		mvn package
-		pwd
-		ls -lart
-		touch "hello.txt"
-		
-		
-		'''
-          }
-        }
-        
-
-  stage('Docker Build and Tag') {
-           steps {
-              
-                sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:latest'
-                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:$BUILD_NUMBER'
-               
-          }
-        }
-     
-
-      stage('Run Docker container on Jenkins Agent') {
-             
-            steps 
-			{
-                sh "docker run -d -p 8083:8080 nikhilnidhi/samplewebapp"
- 
+    agent any
+	tools {nodejs "node"
+    stages {
+        stage('Tests') {
+            steps {
+//                 script {
+//                    docker.image('node:10-stretch').inside { c ->
+                        echo 'Building..'
+                        sh 'npm install'
+                        echo 'Testing..'
+                        sh 'npm test'
+//                         sh "docker logs ${c.id}"
+//                    }
+//                 }
             }
         }
+        stage('Build and push docker image') {
+            steps {
+                script {
+
+                  
+                    sh 'docker build -t nodedemo .' 
+					 sh 'docker run -d --name node-demo -p 80:3000 nodedemo'
+                    }
+                }
+            }
+        }
+
     }
-	}
-    
