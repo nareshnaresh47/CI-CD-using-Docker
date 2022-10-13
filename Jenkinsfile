@@ -21,7 +21,7 @@ pipeline {
 
                   
                     sh 'docker build -t nodedemo .' 
-					 sh 'docker run -d --name node-demo -p 80:3000 nodedemo'
+					 sh 'docker run -d --name node-demo -p 8081:3000 nodedemo'
                     }
                 }
             }
