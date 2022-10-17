@@ -22,6 +22,8 @@ pipeline {
                   
                     sh 'docker build -t nodedemo .' 
 					 sh 'docker run -d --name node-demo -p 8081:3000 nodedemo'
+			sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8002:80 nikhilnidhi/samplewebapp"
+                sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 nikhilnidhi/samplewebapp"
                     }
                 }
             }
